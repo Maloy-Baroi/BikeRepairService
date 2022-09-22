@@ -1,0 +1,140 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_filters %}
+{% block main %}
+    <style>
+        table {
+            border: 1px solid #ccc;
+            border-collapse: collapse;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            table-layout: fixed;
+        }
+
+        table caption {
+            font-size: 1.5em;
+            margin: .5em 0 .75em;
+        }
+
+        table tr {
+            background-color: #f8f8f8;
+            border: 1px solid #ddd;
+            padding: .35em;
+        }
+
+        table th,
+        table td {
+            padding: .625em;
+            text-align: center;
+        }
+
+        table th {
+            font-size: .85em;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+        }
+
+        @media screen and (max-width: 600px) {
+            table {
+                border: 0;
+            }
+
+            table caption {
+                font-size: 1.3em;
+            }
+
+            table thead {
+                border: none;
+                clip: rect(0 0 0 0);
+                height: 1px;
+                margin: -1px;
+                overflow: hidden;
+                padding: 0;
+                position: absolute;
+                width: 1px;
+            }
+
+            table tr {
+                border-bottom: 3px solid #ddd;
+                display: block;
+                margin-bottom: .625em;
+            }
+
+            table td {
+                border-bottom: 1px solid #ddd;
+                display: block;
+                font-size: .8em;
+                text-align: right;
+            }
+
+            table td::before {
+                /*
+                * aria-label has no advantage, it won't be read inside a table
+                content: attr(aria-label);
+                */
+                content: attr(data-label);
+                float: left;
+                font-weight: bold;
+                text-transform: uppercase;
+            }
+
+            table td:last-child {
+                border-bottom: 0;
+            }
+        }
+
+        .download-btn {
+            font-size: .8rem;
+            background-color: transparent !important;
+            color: black;
+            padding: 3px 6px !important;
+            border: 1px solid #198754;
+            border-radius: 5px;
+        }
+    </style>
+    {% block extra_toggle_button %}
+        <button class="navbar-toggler" type="button" onclick="toggleSlider()">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    {% endblock %}
+    {% include 'App_main/customer_dashboard_base.html' %}
+    <div class="container" style="text-align: center; justify-items: center;">
+        <div class="container mt-5 mb-3" id="id-data-content">
+            <div>
+                <h2 class="text-center text-capitalize">Completed</h2>
+            </div>
+        </div>
+        <table class="data-table">
+            <thead>
+            <tr>
+                <th scope="col">Bike Details</th>
+                <th scope="col">Problems</th>
+                <th scope="col">Repair Date</th>
+                <th scope="col">Invoice Download</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for book in completed %}
+                <tr>
+                    <td data-label="Bike Type" id="id-bike-type">
+                        {{ book.bike_type }}
+                    </td>
+                    <td data-label="Service Name" id="id-service-name">
+                        {{ book.service_name }}
+                    </td>
+                    <td data-label="Booking Date" id="id-booking-date">
+                        {{ book.booking_date.date }}
+                    </td>
+                    <td data-label="Invoice">
+                        <button class="btn download-btn"
+                                onclick="window.location.href='{% url "App_main:single-invoice-view" pk=book.id %}'">
+                            Download
+                        </button>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

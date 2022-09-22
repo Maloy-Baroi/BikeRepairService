@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block main %}
+    <link rel="stylesheet" href="{% static 'css/basicx.css' %}">
+    <div class="container all-services">
+        <h1 class="smart-services-header">
+            Our Services
+        </h1>
+        <div class="row">
+            {% for service in services %}
+                <div class="col-md-3 col-sm-12">
+                    <div class="hover">
+                        <img src="{{ service.service_details_image.url }}" alt="Quality Products">
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-12">
+                    <div class="service-details">
+                        <p class="service-name">
+                            <img src="{{ service.logo.url }}" alt="Logo" class="logo-image mx-auto">
+                            {{ service.name }}
+                        </p>
+                        <ul>
+                            <li>
+                                <div style="cursor: pointer;" data-bs-toggle="modal"
+                                     data-bs-target="#serviceModal-{{ service.id }}">
+                                    {{ service.details|truncatewords_html:20|safe }}
+                                </div>
+                            </li>
+                        </ul>
+                        <p class="service-cost" style="display: none;">
+                            Service Charge: BDT {{ service.cost }}/-
+                        </p>
+                    </div>
+                </div>
+                <!-- Modal -->
+                <div class="modal fade left" id="serviceModal-{{ service.id }}" tabindex="-1"
+                     aria-labelledby="exampleModalLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">{{ service.name }}</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                {{ service.details|safe }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

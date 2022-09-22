@@ -1,0 +1,46 @@
+<style>
+    .small-screen-dashboard {
+            display: none;
+            height: auto;
+            justify-items: center;
+            text-align: center;
+        }
+
+        @media only screen and (max-width: 767px) {
+            .small-screen-dashboard {
+                display: block;
+                justify-content: right;
+                margin-bottom: 40px;
+            }
+
+            .small-screen-dashboard a {
+                color: #000;
+                text-decoration: #0f2027;
+                cursor: pointer;
+                padding: 8px;
+                font-size: 13px;
+            }
+        }
+
+        @media only screen and (max-width: 472px) {
+            .small-screen-dashboard {
+                display: block;
+                justify-content: right;
+                margin-bottom: 40px;
+            }
+
+            .small-screen-dashboard a {
+                color: #000;
+                text-decoration: #0f2027;
+                cursor: pointer;
+                padding: 8px;
+            }
+        }
+</style>
+<div class="container small-screen-dashboard">
+    <a href="{% url 'App_main:user-dashboard' %}">Dashboard</a>
+    <a href="{% url 'App_main:user-booking' %}">Bookings</a>
+    <a href="">Invoice</a>
+    <a href="">Warranty</a>
+    <a href="">Contact</a>
+</div>
